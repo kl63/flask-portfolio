@@ -8,7 +8,7 @@ def home():
 
 @app.route("/about")
 def about():
-    return "<h2>About Kevin</h2><p>This is your Flask-powered Pi server 🎉</p>"
+    return "<h2>About Kevin</h2><p>This is your Flask-powered Pi server 🎉 (COMING SOON!!)</p>"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
