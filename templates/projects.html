@@ -1,0 +1,150 @@
+{% extends "layout.html" %}
+
+{% block title %}Kevin Lin | Projects{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1>My Projects</h1>
+        <p>A collection of my recent work</p>
+    </div>
+</section>
+
+<!-- Projects Filter -->
+<section class="projects-filter">
+    <div class="container">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="web">Web Development</button>
+            <button class="filter-btn" data-filter="python">Python</button>
+            <button class="filter-btn" data-filter="raspberry">Raspberry Pi</button>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Gallery -->
+<section class="projects-gallery">
+    <div class="container">
+        <div class="projects-grid">
+            {% for project in projects %}
+            <div class="project-item" 
+                 data-category="{% for tech in project.technologies %}{{ tech.lower().replace('/', '').replace('.', '').replace(' ', '') }} {% endfor %}">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="{{ url_for('static', filename=project.image) }}" alt="{{ project.title }}">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                {% if project.github %}
+                                <a href="{{ project.github }}" class="project-link" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                {% endif %}
+                                {% if project.live %}
+                                <a href="{{ project.live }}" class="project-link" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>{{ project.title }}</h3>
+                        <p>{{ project.description }}</p>
+                        <div class="project-tech">
+                            {% for tech in project.technologies %}
+                            <span>{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <!-- Additional static project examples -->
+            <div class="project-item" data-category="python raspberry">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="{{ url_for('static', filename='img/project4.jpg') }}" alt="Raspberry Pi Weather Station">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://github.com/yourusername/pi-weather" class="project-link" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>Raspberry Pi Weather Station</h3>
+                        <p>A weather monitoring station built with Raspberry Pi and various sensors, with data visualization.</p>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>Raspberry Pi</span>
+                            <span>Flask</span>
+                            <span>IoT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="project-item" data-category="web">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="{{ url_for('static', filename='img/project5.jpg') }}" alt="E-commerce Platform">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://github.com/yourusername/ecommerce" class="project-link" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://ecommerce-demo.com" class="project-link" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>E-commerce Platform</h3>
+                        <p>A full-featured e-commerce platform with product catalog, shopping cart, and payment processing.</p>
+                        <div class="project-tech">
+                            <span>JavaScript</span>
+                            <span>React</span>
+                            <span>Node.js</span>
+                            <span>MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectItems = document.querySelectorAll('.project-item');
+        
+        // Filter projects
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                const filterValue = btn.getAttribute('data-filter');
+                
+                projectItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category').includes(filterValue)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

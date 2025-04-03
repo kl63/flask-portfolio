@@ -1,0 +1,154 @@
+{% extends "layout.html" %}
+
+{% block title %}About Kevin Lin{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1>About Me</h1>
+        <p>Learn more about my background and experiences</p>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-image">
+                <img src="{{ url_for('static', filename='img/profile.jpg') }}" alt="Kevin Lin">
+            </div>
+            <div class="about-text">
+                <h2>Who am I?</h2>
+                <p>Hello! I'm Kevin Lin, a passionate full-stack developer with a love for building web applications and tinkering with hardware like Raspberry Pi.</p>
+                <p>I enjoy solving complex problems and turning ideas into reality through clean, efficient code. My journey in technology started when I was 12 years old, building my first HTML website, and I've been hooked ever since.</p>
+                <p>When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or experimenting with my Raspberry Pi collection.</p>
+                <div class="about-details">
+                    <div class="detail-item">
+                        <h3>Name:</h3>
+                        <p>Kevin Lin</p>
+                    </div>
+                    <div class="detail-item">
+                        <h3>Location:</h3>
+                        <p>San Francisco, CA</p>
+                    </div>
+                    <div class="detail-item">
+                        <h3>Email:</h3>
+                        <p>kevin@example.com</p>
+                    </div>
+                    <div class="detail-item">
+                        <h3>Freelance:</h3>
+                        <p>Available</p>
+                    </div>
+                </div>
+                <a href="{{ url_for('static', filename='files/resume.pdf') }}" class="btn btn-primary" download>Download Resume</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Experience Section -->
+<section class="experience-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>My Experience</h2>
+            <p>My professional journey so far</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2023 - Present</div>
+                <div class="timeline-content">
+                    <h3>Senior Developer</h3>
+                    <h4>Tech Company Inc.</h4>
+                    <p>Leading development of web applications using Python and JavaScript frameworks. Implementing best practices for security and performance.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2020 - 2023</div>
+                <div class="timeline-content">
+                    <h3>Full Stack Developer</h3>
+                    <h4>Digital Agency XYZ</h4>
+                    <p>Created responsive websites and applications for various clients. Managed project workflows and mentored junior developers.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2018 - 2020</div>
+                <div class="timeline-content">
+                    <h3>Web Developer</h3>
+                    <h4>Startup Studio</h4>
+                    <p>Developed front-end interfaces and back-end systems for early-stage startups. Worked with Python, Flask, and various JavaScript libraries.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Education Section -->
+<section class="education-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Education</h2>
+            <p>My academic background</p>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2014 - 2018</div>
+                <div class="timeline-content">
+                    <h3>Bachelor of Science in Computer Science</h3>
+                    <h4>University of Technology</h4>
+                    <p>Focused on software engineering, algorithms, and web development. Graduated with honors.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">2019</div>
+                <div class="timeline-content">
+                    <h3>Full Stack Web Development</h3>
+                    <h4>Tech Bootcamp</h4>
+                    <p>Intensive program focusing on modern web technologies including React, Node.js, and MongoDB.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Testimonials</h2>
+            <p>What people say about working with me</p>
+        </div>
+        <div class="testimonials-container">
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    <p>"Kevin is an exceptional developer who consistently delivers high-quality work. His attention to detail and problem-solving skills make him a valuable asset to any team."</p>
+                </div>
+                <div class="testimonial-info">
+                    <img src="{{ url_for('static', filename='img/testimonial1.jpg') }}" alt="Jane Doe">
+                    <div>
+                        <h4>Jane Doe</h4>
+                        <p>Project Manager, Tech Company Inc.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    <p>"Working with Kevin was a pleasure. He understood our requirements quickly and delivered a solution that exceeded our expectations. His technical expertise is impressive."</p>
+                </div>
+                <div class="testimonial-info">
+                    <img src="{{ url_for('static', filename='img/testimonial2.jpg') }}" alt="John Smith">
+                    <div>
+                        <h4>John Smith</h4>
+                        <p>CEO, Startup Studio</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

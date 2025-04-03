@@ -1,11 +1,144 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Kevin's Flask Site</title>
-</head>
-<body>
-    <h1>Hello from Flask! 🔥</h1>
-    <p>This is your Raspberry Pi serving HTML with Flask.</p>
-    <a href="/about">About Kevin</a>
-</body>
-</html>
+{% extends "layout.html" %}
+
+{% block title %}Kevin Lin | Developer{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Hi, I'm <span class="highlight">Kevin Lin</span></h1>
+            <h2>I build <span class="typing" data-rotate='["websites", "applications", "experiences", "solutions"]'></span></h2>
+            <p>Full Stack Developer | Python Enthusiast | Raspberry Pi Tinkerer</p>
+            <div class="hero-buttons">
+                <a href="{{ url_for('projects') }}" class="btn btn-primary">View My Work</a>
+                <a href="{{ url_for('contact') }}" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <!-- Replace with your own image -->
+            <img src="{{ url_for('static', filename='img/hero-image.png') }}" alt="Kevin Lin">
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section class="skills" id="skills">
+    <div class="container">
+        <div class="section-header">
+            <h2>My Skills</h2>
+            <p>Here are some technologies I work with</p>
+        </div>
+        <div class="skills-container">
+            <div class="skill-card">
+                <i class="fab fa-python"></i>
+                <h3>Python</h3>
+                <p>Flask, Django, Data Analysis</p>
+            </div>
+            <div class="skill-card">
+                <i class="fab fa-js"></i>
+                <h3>JavaScript</h3>
+                <p>React, Node.js, Express</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-database"></i>
+                <h3>Databases</h3>
+                <p>SQL, MongoDB, Firebase</p>
+            </div>
+            <div class="skill-card">
+                <i class="fab fa-raspberry-pi"></i>
+                <h3>IoT</h3>
+                <p>Raspberry Pi, Arduino, Sensors</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Responsive</h3>
+                <p>Mobile-First, Adaptive Design</p>
+            </div>
+            <div class="skill-card">
+                <i class="fas fa-server"></i>
+                <h3>DevOps</h3>
+                <p>Docker, CI/CD, AWS</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects -->
+<section class="featured-projects">
+    <div class="container">
+        <div class="section-header">
+            <h2>Featured Projects</h2>
+            <p>Some of my recent work</p>
+        </div>
+        <div class="project-cards">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="{{ url_for('static', filename='img/project1.jpg') }}" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <h3>Project 1</h3>
+                    <p>Description of your first featured project. What problems did it solve? What technologies did you use?</p>
+                    <div class="project-tech">
+                        <span>Python</span>
+                        <span>Flask</span>
+                        <span>React</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/yourusername/project1" class="btn btn-sm">View Code</a>
+                        <a href="https://project1-demo.com" class="btn btn-sm btn-primary">Live Demo</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="{{ url_for('static', filename='img/project2.jpg') }}" alt="Project 2">
+                </div>
+                <div class="project-info">
+                    <h3>Project 2</h3>
+                    <p>Description of your second featured project. What problems did it solve? What technologies did you use?</p>
+                    <div class="project-tech">
+                        <span>JavaScript</span>
+                        <span>Node.js</span>
+                        <span>MongoDB</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/yourusername/project2" class="btn btn-sm">View Code</a>
+                        <a href="https://project2-demo.com" class="btn btn-sm btn-primary">Live Demo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a href="{{ url_for('projects') }}" class="btn btn-secondary">View All Projects</a>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta">
+    <div class="container">
+        <h2>Interested in working together?</h2>
+        <p>I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-light">Get In Touch</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Setup typing animation
+        const options = {
+            strings: JSON.parse(document.querySelector('.typing').getAttribute('data-rotate')),
+            typeSpeed: 80,
+            backSpeed: 40,
+            backDelay: 1500,
+            startDelay: 500,
+            loop: true
+        };
+        new Typed('.typing', options);
+    });
+</script>
+{% endblock %}
