@@ -13,6 +13,9 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% block extra_css %}{% endblock %}
+    
+    <!-- Add head block for page-specific head content like scripts -->
+    {% block head %}{% endblock %}
 </head>
 <body>
     <!-- Navigation -->

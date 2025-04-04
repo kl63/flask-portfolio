@@ -2,6 +2,26 @@
 
 {% block title %}Contact Kevin Lin{% endblock %}
 
+{% block head %}
+<!-- Add the reCAPTCHA v3 script in the head -->
+<script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Custom styles for flash messages if needed */
+    .flash-message {
+        padding: 12px 15px;
+        margin-bottom: 15px;
+        border-radius: 4px;
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+        transition: opacity 0.5s ease;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <!-- Page Header -->
 <section class="page-header">
@@ -64,6 +84,7 @@
             
             <div class="contact-form">
                 <h2>Send a Message</h2>
+                
                 <form id="contactForm" action="{{ url_for('contact') }}" method="POST">
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -85,6 +106,9 @@
                         <textarea id="message" name="message" rows="5" required></textarea>
                     </div>
                     
+                    <!-- Hidden input for reCAPTCHA token -->
+                    <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+                    
                     <button type="submit" class="btn btn-primary">Send Message</button>
                 </form>
             </div>
@@ -103,4 +127,54 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Execute reCAPTCHA when page loads
+        grecaptcha.ready(function() {
+            // Get token when page loads
+            refreshReCaptcha();
+            
+            // Refresh token every 2 minutes (tokens expire after 2 minutes)
+            setInterval(refreshReCaptcha, 120000);
+        });
+        
+        function refreshReCaptcha() {
+            grecaptcha.execute('{{ recaptcha_site_key }}', {action: 'contact'})
+                .then(function(token) {
+                    // Add the token to the hidden input field
+                    document.getElementById('g-recaptcha-response').value = token;
+                    console.log('reCAPTCHA token refreshed');
+                })
+                .catch(function(error) {
+                    console.error('reCAPTCHA error:', error);
+                });
+        }
+        
+        // Get a fresh token right before form submission
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                // Only if the form validation passes
+                if (contactForm.checkValidity()) {
+                    e.preventDefault();
+                    
+                    // Get a fresh token
+                    grecaptcha.execute('{{ recaptcha_site_key }}', {action: 'contact'})
+                        .then(function(token) {
+                            document.getElementById('g-recaptcha-response').value = token;
+                            contactForm.submit();
+                        })
+                        .catch(function(error) {
+                            console.error('reCAPTCHA error on submit:', error);
+                            // Submit anyway, the server will handle it
+                            contactForm.submit();
+                        });
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}
