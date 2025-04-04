@@ -1,14 +1,18 @@
-from flask import Flask, render_template, url_for, request, flash, redirect
+from flask import Flask, render_template, url_for, request, flash, redirect, jsonify
 from dotenv import load_dotenv
 import os
 import requests
 from flask_mail import Mail, Message
+import openai  # You'll need to install this: pip install openai
 
 # Load environment variables from .env file
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
+
+# Configure OpenAI
+openai.api_key = os.getenv("OPENAI_API_KEY")  # Add this to your .env file
 
 # Configure Flask-Mail
 app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER", "smtp.gmail.com")
@@ -108,6 +112,50 @@ Message:
         return redirect(url_for("contact"))
     
     return render_template("contact.html", recaptcha_site_key=RECAPTCHA_SITE_KEY)
+
+# Add a new route to handle chat requests
+@app.route("/chat", methods=["POST"])
+def chat():
+    data = request.get_json()
+    user_message = data.get("message", "")
+    
+    # Custom system prompt with information about Kevin and the portfolio
+    system_prompt = """You are Kevin Lin's helpful portfolio website assistant. 
+    You can help users navigate the site, learn about Kevin's projects, background, skills, 
+    and assist with any questions about contacting Kevin.
+    
+    About Kevin:
+    - Developer, designer, and creator with experience in web development
+    - Skilled in Python, Flask, HTML/CSS, and other web technologies
+    - Portfolio showcases various projects including web applications and design work
+    - Available for contact through the contact form or via social media links in the footer
+    
+    Website Sections:
+    - Home: Introduction and overview
+    - About: Kevin's background, skills, and experience
+    - Projects: Showcase of Kevin's work
+    - Contact: Form to reach out to Kevin
+    
+    Be friendly, helpful, and concise in your responses. If you don't know specific details
+    about Kevin that aren't provided here, suggest the visitor check the About page or contact
+    Kevin directly through the contact form.
+    """
+    
+    try:
+        response = openai.chat.completions.create(
+            model="gpt-3.5-turbo",  # or your preferred model
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message}
+            ],
+            max_tokens=150
+        )
+        
+        ai_response = response.choices[0].message.content
+        return jsonify({"response": ai_response})
+    except Exception as e:
+        print(f"Error with OpenAI API: {e}")
+        return jsonify({"response": "Sorry, I'm having trouble connecting right now. Please try again later."}), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
